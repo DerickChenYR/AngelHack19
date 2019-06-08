@@ -2,6 +2,7 @@
 #Flask App for Reunite, AngelHack 19 NY
 
 from flask import Flask, render_template, redirect, request, url_for, session, send_from_directory, abort
+from werkzeug import secure_filename
 import os
 import sys
 from datetime import datetime,timedelta
@@ -12,7 +13,7 @@ import traceback
 
 #Load script files
 from db_classes import db
-
+from db_query import insert_found, insert_missing, query_missing_by_name, query_found_by_name
 
 with open ("../config/config.json") as secret:
 	credentials = json.load(secret)
@@ -40,6 +41,7 @@ server.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 server.config["SQLALCHEMY_POOL_RECYCLE"] = 60
 server.config['SQLALCHEMY_POOL_TIMEOUT'] = 20
 server.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+server.config["PHOTO_UPLOAD_DIR"] = "../static/photos"
 
 db.init_app(server)
 
@@ -59,7 +61,7 @@ def index():
 
 	if request.method == "GET":
 
-		return ("index page")
+		return render_template("index.html")
 
 	else:
 		abort(400) #bad request
@@ -67,13 +69,36 @@ def index():
 
 
 
-@server.route("/checkin", methods=["GET"])
+@server.route("/checkin", methods=["GET","POST"])
 def checkin():
 
 	if request.method == "GET":
 
 		return render_template("checkin.html")
 
+	elif request.method == "POST":
+
+		#img = request.files['file']
+
+		#img_save_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename))
+
+		#img.save(img_save_path)
+
+		data = {
+			"img_path": "test_path", #img_save_path,
+			"name": request.form["name"],
+			"nationality": request.form["nationality"],
+			"description": request.form["description"],
+			"checkin_time": request.form["checkin_time"],
+			"location": request.form["location"],
+		}
+
+		response = insert_found(data)
+
+		if response == True:
+			return render_template("checkin.html", msg="Recorded New Found Person. This person has not been reported as missing.")
+		else:
+			return render_template("checkin.html", msg="Recorded New Found Person. This person was reported missing by {}, contact no. {}, contact eamil {}.".format(response.contact_name, response.contact_phone, response.contact_email))
 	else:
 		abort(400) #bad request
 
