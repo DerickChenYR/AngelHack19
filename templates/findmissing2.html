@@ -1,0 +1,33 @@
+Find Missing Person
+Page 2
+
+<form name="findmissing2"  method="POST">
+
+	{% if msg %}
+	<p style="color:red;">{{msg}}</p>
+	{% endif %}
+
+    <label>Person Name<input required type="text" name="name" class="checkin_input_field">
+    </label><br>
+    <label>Nationality<input required type="text" name="nationality" class="checkin_input_field">
+    </label><br>
+    <label>Description/Injuries<input required type="text" name="description" class="checkin_input_field">
+    </label><br>
+    <label>Contact Person Name<input required type="text" name="contact_name" class="checkin_input_field">
+    </label><br>
+    <label>Contact Person Phone<input required type="text" name="contact_phone" class="checkin_input_field">
+    </label><br>
+    <label>Contact Person Email<input required type="text" name="contact_email" class="checkin_input_field">
+    </label><br>
+
+
+  <input type="submit" name="action" value="Submit" style="margin-top:30px;">
+</form>
+
+
+<style>
+.checkin_input_field {
+	height:30px;
+}
+
+</style>

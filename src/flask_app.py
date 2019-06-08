@@ -30,6 +30,7 @@ server.secret_key = os.urandom(999)
 #Environment/Debugging Mode Setting
 #ENV = 'production'/'development', single quotes needed
 server.config["ENV"] = 'development'
+server.config["DEBUG"] = True
 
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
 	username=credentials['sqlalchemy']['username'],
@@ -80,7 +81,7 @@ def checkin():
 
 		#img = request.files['file']
 
-		#img_save_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename))
+		#img_save_path = os.path.join(app.config['PHOTO_UPLOAD_DIR'], secure_filename(f.filename))
 
 		#img.save(img_save_path)
 
@@ -105,16 +106,56 @@ def checkin():
 
 
 
-@server.route("/findmissing", methods=["GET"])
-def findmissing():
+@server.route("/findmissing1", methods=["GET","POST"])
+def findmissing1():
 
 	if request.method == "GET":
 
-		return render_template("findmissing.html")
+		return render_template("findmissing1.html")
+
+	elif request.method == "POST":
+
+		img = request.files['file']
+
+		img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], secure_filename(img.filename))
+		session['img_save_path'] = img_save_path
+
+		img.save(img_save_path)
+		return redirect(url_for("findmissing2"))
 
 	else:
 		abort(400) #bad request
 
+
+@server.route("/findmissing2", methods=["GET","POST"])
+def findmissing2():
+
+	if request.method == "GET":
+
+		return render_template("findmissing2.html")
+
+	elif request.method == "POST":
+
+		data = {
+			"img_path": session['img_save_path'],
+			"name": request.form["name"],
+			"nationality": request.form["nationality"],
+			"description": request.form["description"],
+			"contact_name": request.form["contact_name"],
+			"contact_phone": request.form["contact_phone"],
+			"contact_email": request.form["contact_email"],
+		}
+
+		response = insert_missing(data)
+
+		if response == True:
+			return render_template("findmissing2.html", msg="Recorded New Missing Person. You will be contacted once this person has been found.")
+		else:
+			return ("failed")
+
+	else:
+		print(request.method)
+	
 
 
 
