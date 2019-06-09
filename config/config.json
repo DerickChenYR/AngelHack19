@@ -2,6 +2,11 @@
 	"watson_API":{
 		"API_key":"o-YCM_TdGd8HRiMsWQJlUHsXtzSwr9sW1wijHnSNzBH7",
 		"Test_Model":"NewAnand_1356574898"
+	},
+	"mailguninbox":{
+		"sandbox_req_url":"https://api.mailgun.net/v3/sandbox3f9d5b269325472884af86045b18eb7a.mailgun.org/messages",
+        "sandbox_api":"key-bf8ddfc276d00155fbfb515e6492d192",
+        "sandbox_from_id":"Mailgun Sandbox <postmaster@sandbox3f9d5b269325472884af86045b18eb7a.mailgun.org>"
 	}
 
 }

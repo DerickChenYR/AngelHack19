@@ -17,7 +17,7 @@ import hashlib
 from db_classes import db
 from db_query import insert_found, insert_missing, query_missing_by_name, query_found_by_name
 from watson_api import watson_test
-
+from alert_email import send_email
 
 
 server = Flask(__name__,template_folder='../templates', static_folder='../static', static_url_path='/static')
@@ -134,6 +134,7 @@ def checkin3():
 		confidence = watson_test(session['img_save_path'])
 
 		if type(confidence) is float:
+			send_email(response.contact_email, "Missing Person Found", "We have found {} with {} confidence level.".format(response.name, confidence))
 			return render_template("checkin3.html", facial_ai = "Matched", ai_confidence = confidence, name = response.name, contact_name=response.contact_name, contact_phone=response.contact_phone, contact_email=response.contact_email)
 		else:
 			return render_template("checkin3.html", facial_ai = "NOT Matched", ai_confidence = 0.0, name = response.name, contact_name=response.contact_name, contact_phone=response.contact_phone, contact_email=response.contact_email)
@@ -180,6 +181,8 @@ def findmissing2():
 			"contact_email": request.form["contact_email"],
 		}
 
+		session["searcher_email"] = request.form["contact_email"]
+
 		response = insert_missing(data)
 
 		if response == True:
@@ -204,6 +207,7 @@ def findmissing3():
 		confidence = watson_test(session['img_save_path'])
 
 		if type(confidence) is float:
+			send_email(session["searcher_email"], "Missing Person Found", "We have found {} with {} confidence level.".format(response.name, confidence))
 			return render_template("findmissing3.html", facial_ai = "Matched", ai_confidence = confidence, name = response.name, location = response.location)
 		else:
 			return render_template("findmissing3.html", facial_ai = "NOT Matched", ai_confidence = 0.0, name = response.name, location = response.location)
