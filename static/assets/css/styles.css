@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
 
 *{
     box-sizing: border-box;
@@ -7,14 +7,13 @@
 }
 
 html{
-    background-color: #fff;
+    background-color: #1D9EED;
     font:normal 16px/1.5 sans-serif;
-    color: #333;
 }
 
 h3{
     font: normal 32px/1.5 'Open Sans', sans-serif;
-    color: #2c3e50;
+    color: #fff;
     margin: 50px 0;
     text-align: center;
 }
@@ -24,7 +23,7 @@ h3{
     max-width: 1000px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #efefef;
+    background-color: #1D9EED;
 }
 
 .app{
@@ -36,8 +35,8 @@ h3{
     display: none;
     border-radius: 3px;
     max-width: 400px;
-    color: #fff;
-    background-color: #448AFF;
+    color: #3777;
+    background-color: #1D9EED;
     text-decoration: none;
     padding: 15px;
     opacity: 0.8;
@@ -123,7 +122,9 @@ h3{
     display: none;
 }
 
-
+.checkin{
+    font-color:#ffff;
+}
 
 .app video#camera-stream.visible,
 .app img#snap.visible,
@@ -134,45 +135,5 @@ h3{
 
 .app .controls.visible{
     display: flex;
-}
-
-
-
-@media(max-width: 1000px){
-    .container{
-        margin: 40px;
-    }
-
-    .app #start-camera.visible{
-        display: block;
-    }
-
-    .app .controls a i{
-        font-size: 16px;
-    }
-
-    .app .controls #take-photo i{
-        font-size: 24px;
-    }
-}
-
-
-@media(max-width: 600px){
-    .container{
-        margin: 10px;
-    }
-
-    .app #error-message{
-        padding: 80px 50px;
-        font-size: 18px;
-    }
-
-    .app .controls a i{
-        font-size: 12px;
-    }
-
-    .app .controls #take-photo i{
-        font-size: 18px;
-    }
 }
 
