@@ -131,7 +131,7 @@ def checkin3():
 		response = query_missing_by_name(session["missing_name"])
 
 		#To-Do: Check Waston AI, as secondary match key
-		matched = watson_test(response.img_path)
+		matched = watson_test(session['img_save_path'])
 
 		if matched:
 			return render_template("checkin3.html", facial_ai = "Matched", name = response.name, contact_name=response.contact_name, contact_phone=response.contact_phone, contact_email=response.contact_email)

@@ -25,7 +25,7 @@ def watson_test(img_path):
 		threshold="{}".format(threshold),
 		classifier_ids="DefaultCustomModel_549148796"
 		).get_result()
-
+		pprint(classes)
 		#get AI facial class model 2 scores
 		try:
 			score = float((json.dumps(classes["images"][0]["classifiers"][0]["classes"][0]["score"])))
