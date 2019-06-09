@@ -33,8 +33,6 @@ def watson_test(img_path):
 		except:
 			return False
 
-	return score > threshold
-
-
+	return score
 
 

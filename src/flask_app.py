@@ -131,12 +131,12 @@ def checkin3():
 		response = query_missing_by_name(session["missing_name"])
 
 		#Check Waston AI, as secondary match key
-		matched = watson_test(session['img_save_path'])
+		confidence = watson_test(session['img_save_path'])
 
-		if matched:
-			return render_template("checkin3.html", facial_ai = "Matched", name = response.name, contact_name=response.contact_name, contact_phone=response.contact_phone, contact_email=response.contact_email)
+		if type(confidence) is float:
+			return render_template("checkin3.html", facial_ai = "Matched", ai_confidence = confidence, name = response.name, contact_name=response.contact_name, contact_phone=response.contact_phone, contact_email=response.contact_email)
 		else:
-			return render_template("checkin3.html", facial_ai = "NOT Matched", name = response.name, contact_name=response.contact_name, contact_phone=response.contact_phone, contact_email=response.contact_email)
+			return render_template("checkin3.html", facial_ai = "NOT Matched", ai_confidence = 0.0, name = response.name, contact_name=response.contact_name, contact_phone=response.contact_phone, contact_email=response.contact_email)
 		
 
 
@@ -201,12 +201,12 @@ def findmissing3():
 		response = query_found_by_name(session["found_name"])
 
 		#Check Waston AI, as secondary match key
-		matched = watson_test(session['img_save_path'])
+		confidence = watson_test(session['img_save_path'])
 
-		if matched:
-			return render_template("findmissing3.html", facial_ai = "Matched", name = response.name, location = response.location)
+		if type(confidence) is float:
+			return render_template("findmissing3.html", facial_ai = "Matched", ai_confidence = confidence, name = response.name, location = response.location)
 		else:
-			return render_template("findmissing3.html", facial_ai = "NOT Matched", name = response.name, location = response.location)
+			return render_template("findmissing3.html", facial_ai = "NOT Matched", ai_confidence = 0.0, name = response.name, location = response.location)
 		
 
 
