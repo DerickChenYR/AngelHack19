@@ -130,7 +130,7 @@ def checkin3():
 
 		response = query_missing_by_name(session["missing_name"])
 
-		#To-Do: Check Waston AI, as secondary match key
+		#Check Waston AI, as secondary match key
 		matched = watson_test(session['img_save_path'])
 
 		if matched:
@@ -185,12 +185,29 @@ def findmissing2():
 		if response == True:
 			return render_template("findmissing2.html", msg="Recorded New Missing Person. You will be contacted once this person has been found.")
 		else:
-			return ("failed")
+			session["found_name"] = response.name
+			return redirect(url_for("findmissing3"))
 
 	else:
 		print(request.method)
 	
 
+
+@server.route("/findmissing3", methods=["GET"])
+def findmissing3():
+
+	if request.method == "GET":
+
+		response = query_found_by_name(session["found_name"])
+
+		#Check Waston AI, as secondary match key
+		matched = watson_test(session['img_save_path'])
+
+		if matched:
+			return render_template("findmissing3.html", facial_ai = "Matched", name = response.name, location = response.location)
+		else:
+			return render_template("findmissing3.html", facial_ai = "NOT Matched", name = response.name, location = response.location)
+		
 
 
 if __name__ == "__main__":
