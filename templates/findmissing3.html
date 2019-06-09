@@ -1,19 +1,51 @@
-Find Missing Page Search Result
-Missing Person has been reported Found
 
 
-<form name="checkin3"  method="POST">
-
-	<p>{{name}} has been reported found at {{location}}.</p>
-
-    <p>Watson AI facial match result: {{facial_ai}}</p>
-
-</form>
+<html>
+<body>
+<h3 style="text-align:center">Missing Person Found!</h3>
+<div class="container">
+	<div class="card">
+	  <img src={{photo_path}} alt="Avatar" style="max-width:100%">
+		  <div class="message">
+			<h4>{{name}} has been reported found at {{location}}.</h4>
+			  <h3>Watson AI facial match result: {{facial_ai}}</h3>
+			  <h3>confidence level = {{ai_confidence}}</h3>
+		  </div>
+	</div>
+</div>
+</body>
+</html>
 
 
 <style>
-.checkin_input_field {
-	height:30px;
+body {
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-weight: 100;
+  font-size: 12px;
+  line-height: 30px;
+  color: #777;
+  background: #1D9EED;
+}
+
+.container{
+	width: 30%;
+	margin: auto;
+	background: #fff;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.message{
+	padding: 10px
+}
+img{
+	border-radius: 5px 5px 0 0;
 }
 
 </style>
