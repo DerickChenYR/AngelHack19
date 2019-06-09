@@ -73,11 +73,11 @@ document.addEventListener('DOMContentLoaded', function () {
         var snap = takeSnapshot();
 
         // Show image. 
-        image.setAttribute('src', snap);
+        image.src = snap;
         image.classList.add("visible");
 
         photo_link = document.getElementById("photo_sub")
-        photo_link.setAttribute('name',snap)
+        // photo_link.setAttribute('name',snap)
 
         // Enable delete and save buttons
         delete_photo_btn.classList.remove("disabled");
@@ -86,17 +86,20 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set the href attribute of the download button to the snap url.
         download_photo_btn.href = snap;
 
+//        var form = new FormData();
+//        form.append('file', snap);
 
-        $.ajax({
-          type: "POST",
-          url: "/photo/" + response.authResponse.accessToken
-        
-          success: function(){
-          	console.log("success");
-          }
+        fetch("/photo",{
+            method: "POST",
+//            body: JSON.stringify(form),
+            body: snap.split(';')[1].split(',')[1],
+//            headers: {'Content-Type':'multipart/form-data'}
+        })
+        .then(response => {
+            console.log("success");
+            window.location.href = "/checkin2";
         });
 
-        
         // Pause video playback of stream.
         video.pause();
 
@@ -108,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
 
         // Hide image.
-        image.setAttribute('src', "");
+        image.src = "";
         image.classList.remove("visible");
 
         // Disable delete and save buttons

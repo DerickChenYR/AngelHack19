@@ -62,18 +62,20 @@ def index():
 		abort(400) #bad request
 
 
-@server.route("/photo/<jsdata>", methods=["POST"])
-def photo(jsdata):
 
-	hash = hashlib.sha1()
-	hash.update(str(time.time()).encode('utf-8'))
+@server.route("/photo", methods=["POST"])
+def photo():
+	#hash = hashlib.sha1()
+	#hash.update(str(time.time()).encode('utf-8'))
 
-	filename = "{}.jpg".format(hash.hexdigest()[:10])
+	#filename = "{}.jpg".format(hash.hexdigest()[:10])
 
-	img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], filename)
+	#img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], filename)
+	img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], "test.png")
 	session['img_save_path'] = img_save_path
 
-	image_64 = jsdata
+
+	image_64 = request.data
 	image_data = base64.b64decode(image_64)
 
 	with open(img_save_path, 'wb') as image:
@@ -83,11 +85,11 @@ def photo(jsdata):
 	return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 
+
 @server.route("/checkin1", methods=["GET","POST"])
 def checkin1():
 
 	if request.method == "GET":
-
 		return render_template("checkin1.html")
 
 
@@ -96,8 +98,7 @@ def checkin1():
 def checkin2():
 
 	if request.method == "GET":
-
-		return render_template("checkin.html")
+		return render_template("checkin2.html")
 
 	elif request.method == "POST":
 
