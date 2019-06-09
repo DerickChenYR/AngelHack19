@@ -204,11 +204,12 @@ def findmissing3():
 		response = query_found_by_name(session["found_name"])
 
 		#Check Waston AI, as secondary match key
-		confidence = watson_test(session['img_save_path'])
+		confidence = watson_test(response.img_path)
+		print (response.img_path)
 
 		if type(confidence) is float:
 			send_email(session["searcher_email"], "Missing Person Found", "We have found {} with {} confidence level.".format(response.name, confidence))
-			return render_template("findmissing3.html", photo_path = session['img_save_path'],facial_ai = "Matched", ai_confidence = confidence, name = response.name, location = response.location)
+			return render_template("findmissing3.html", photo_path = response.img_path,facial_ai = "Matched", ai_confidence = confidence, name = response.name, location = response.location)
 		else:
 			return render_template("findmissing3.html", facial_ai = "NOT Matched", ai_confidence = 0.0, name = response.name, location = response.location)
 		
