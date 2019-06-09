@@ -52,6 +52,7 @@ db.init_app(server)
 #############################################################################################################
 
 @server.route("/", methods=["GET"])
+@server.route("/home", methods=["GET"])
 def index():
 
 	if request.method == "GET":
@@ -114,7 +115,7 @@ def checkin2():
 		response = insert_found(data)
 
 		if response == True:
-			return render_template("checkin2.html", msg="Recorded New Found Person. This person has not been reported as missing.")
+			return render_template("checkin2.html", msg="Success: New Found Person Recorded.")
 		else:
 			#A missing person of same name is on record, primary match key
 			session["missing_name"] = response.name
@@ -186,7 +187,7 @@ def findmissing2():
 		response = insert_missing(data)
 
 		if response == True:
-			return render_template("findmissing2.html", msg="Recorded New Missing Person. You will be contacted once this person has been found.")
+			return render_template("findmissing2.html", msg="Success: You will be contacted once this person has been found.")
 		else:
 			session["found_name"] = response.name
 			return redirect(url_for("findmissing3"))

@@ -1,14 +1,16 @@
-Find Missing Person
-Page 2
 <html>
-
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" >
 <body>
-   <h3 style= "font-family: Garamond; color:white; text-align:center; padding:60px; font-size:100px">Reunite.AI</h3>
+   <p style= "color:#1D9EED; text-align:center; padding:20px; font-size:100px">Reunite.AI</p>
 <div class="container">
+
     <form name="findmissing2" id="contact" method="POST">
+
         {% if msg %}
-        <h3 font-color:red> {{msg}} </h3>
-        {% endif %}
+        <h3> {{msg}} </h3>
+        <a href="/home" >Return Home</a>
+        {% else %}
+        
         <h3>Individual Information</h3>
         <fieldset>
                 <input required value="Anand Chitale" placeholder="Missing Person's Name" tabindex="1" type="text" name="name" class="checkin_input_field" required autofocus>
@@ -33,6 +35,7 @@ Page 2
       </button>
 
     </form>
+    {% endif %}
     </div>
 </body>
 </html>
@@ -53,14 +56,13 @@ Page 2
   text-rendering: optimizeLegibility;
 }
 
+
 body {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
-  font-weight: 100;
-  font-size: 12px;
-  line-height: 30px;
-  color: #777;
-  background: #1D9EED;
+  background-image: url("{{ url_for('static', filename='images/disaster-relief2.jpg') }}");
+  background-size: cover;
+  background-blend-mode: luminosity;
 }
+
 
 .container {
   max-width: 400px;
@@ -183,4 +185,5 @@ fieldset {
 :-ms-input-placeholder {
   color: #888;
 }
+
 </style>

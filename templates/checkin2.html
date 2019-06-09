@@ -1,14 +1,20 @@
 
 <html>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" >
+
 <body>
-   <h3 style= "font-family: Garamond; color:white; text-align:center; padding:60px; font-size:100px">Reunite.AI</h3>
+   <p style= "color:#1D9EED; text-align:center; padding:20px; font-size:100px">Reunite.AI</p>
 
     <div class="container">
 
     <form name="checkin" id="contact" method="POST">
+
         {% if msg %}
         <h3> {{msg}} </h3>
-        {% endif %}
+        <a href="/home" style="padding: 30px;"><button>Return Home</button></a>
+        
+        {% else %}
         <h3>Individual Information</h3>
         <fieldset>
                 <input required value="Anand Chitale"placeholder="Name" tabindex="1" type="text" name="name" class="checkin_input_field" required autofocus>
@@ -28,8 +34,11 @@
       <button type="submit" name="action" value="Submit" style="margin-top:30px;">
           Submit
       </button>
+      {% endif %}
 
     </form>
+
+    
     </div>
 </body>
 </html>

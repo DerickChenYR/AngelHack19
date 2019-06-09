@@ -1,15 +1,16 @@
 
 
 <html>
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" >
    <body>
-   <h3 style= "font-family: Garamond; color:white; text-align:center; padding:60px; font-size:100px">Reunite.AI</h3>
+   <p style= "color:#1D9EED; text-align:center; padding:20px; font-size:100px">Reunite.AI</p>
    <div class="container">
       <form id="contact" method = "POST"
          enctype = "multipart/form-data" style="align:auto">
          <h3 margin='5px' style="align:auto">
-             Please Upload Photo Of Missing Person
+             <p style="text-align: center;">Upload Photo Of Missing Person</p>
          </h3>
-          <p></p>
+
           <fieldset style="padding:5px" align="center">
                 <input required placeholder="Upload Photo" styles="margin-top:5px;" tabindex="1" type="file" name="file" class="checkin_input_field" required autofocus>
             </fieldset>
@@ -38,14 +39,13 @@
   text-rendering: optimizeLegibility;
 }
 
+
 body {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
-  font-weight: 100;
-  font-size: 12px;
-  line-height: 30px;
-  color: #777;
-  background: #1D9EED;
+  background-image: url("{{ url_for('static', filename='images/disaster-relief2.jpg') }}");
+  background-size: cover;
+  background-blend-mode: luminosity;
 }
+
 
 .container {
   max-width:600px;
