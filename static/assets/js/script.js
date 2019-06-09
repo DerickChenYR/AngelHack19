@@ -85,8 +85,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Set the href attribute of the download button to the snap url.
         download_photo_btn.href = snap;
+//        var form = new FormData();
+//        form.append('file', snap);
 
-        fetch("/photo/"+ snap)
+        fetch("/photo",{
+            method: "POST",
+//            body: JSON.stringify(form),
+            body: snap+"===",
+//            headers: {'Content-Type':'multipart/form-data'}
+        })
         .then(response => {
             console.log("sent");
         });
