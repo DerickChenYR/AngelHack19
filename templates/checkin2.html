@@ -1,32 +1,24 @@
 Checkin Page
 At Shelters/Hospitals
 
+    <form name="checkin" id="contact" method="POST">
 
-<form name="checkin"  method="POST">
-
-	{% if msg %}
-	<p style="color:red;">{{msg}}</p>
-	{% endif %}
-
-    <label>Person Name<input required type="text" name="name" class="checkin_input_field">
-    </label><br>
-    <label>Nationality<input required type="text" name="nationality" class="checkin_input_field">
-    </label><br>
-    <label>Description/Injuries<input required type="text" name="description" class="checkin_input_field">
-    </label><br>
-    <label>Checked In Time<input required type="text" name="checkin_time" class="checkin_input_field">
-    </label><br>
-    <label>Current Loaction<input required type="text" name="location" class="checkin_input_field">
-    </label><br>
+        {% if msg %}
+        <p style="color:red;">{{msg}}</p>
+        {% endif %}
+        <label>Person Name<input required type="text" name="name" class="checkin_input_field">
+        </label><br>
+        <label>Nationality<input required type="text" name="nationality" class="checkin_input_field">
+        </label><br>
+        <label>Description/Injuries<input required type="text" name="description" class="checkin_input_field">
+        </label><br>
+        <label>Checked In Time<input required type="text" name="checkin_time" class="checkin_input_field">
+        </label><br>
+        <label>Current Loaction<input required type="text" name="location" class="checkin_input_field">
+        </label><br>
 
 
-  <input type="submit" name="action" value="Submit" style="margin-top:30px;">
-</form>
-
-
-<style>
-.checkin_input_field {
-	height:30px;
-}
+      <input type="submit" name="action" value="Submit" style="margin-top:30px;">
+    </form>
 
 </style>

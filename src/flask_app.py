@@ -65,13 +65,13 @@ def index():
 
 @server.route("/photo", methods=["POST"])
 def photo():
-	#hash = hashlib.sha1()
-	#hash.update(str(time.time()).encode('utf-8'))
+	hash = hashlib.sha1()
+	hash.update(str(time.time()).encode('utf-8'))
 
-	#filename = "{}.jpg".format(hash.hexdigest()[:10])
+	filename = "{}.png".format(hash.hexdigest()[:10])
 
-	#img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], filename)
-	img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], "test.png")
+	img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], filename)
+	#img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], "test.png")
 	session['img_save_path'] = img_save_path
 
 
@@ -117,7 +117,7 @@ def checkin2():
 			return render_template("checkin2.html", msg="Recorded New Found Person. This person has not been reported as missing.")
 		else:
 			#A missing person of same name is on record, primary match key
-			session["db_person_missing"] = response
+			session["missing_name"] = response.name
 			return redirect(url_for("checkin3"))
 	else:
 		abort(400) #bad request
@@ -128,7 +128,7 @@ def checkin3():
 
 	if request.method == "GET":
 
-		response = session["db_person_missing"]
+		response = query_missing_by_name(session["missing_name"])
 
 		#To-Do: Check Waston AI, as secondary match key
 
