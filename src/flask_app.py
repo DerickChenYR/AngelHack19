@@ -72,7 +72,6 @@ def photo():
 	#img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], filename)
 	img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], "test.png")
 	session['img_save_path'] = img_save_path
-
 	image_64 = request.data
 	image_data = base64.b64decode(image_64)
 

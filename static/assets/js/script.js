@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch("/photo",{
             method: "POST",
 //            body: JSON.stringify(form),
-            body: snap+"===",
+            body: snap.split(';')[1].split(',')[1],
 //            headers: {'Content-Type':'multipart/form-data'}
         })
         .then(response => {
