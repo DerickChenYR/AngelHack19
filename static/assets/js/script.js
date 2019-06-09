@@ -86,13 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set the href attribute of the download button to the snap url.
         download_photo_btn.href = snap;
 
-
-        fetch("http://photo", {
-          method: "POST",
-          body:JSON.stringify({
-            imageBase64: snap
-          })
-        })
+        fetch("/photo/"+ snap)
         .then(response => {
             console.log("sent");
         });
