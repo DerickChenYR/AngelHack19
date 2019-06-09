@@ -5,26 +5,26 @@ from flask import Flask, render_template, redirect, request, url_for, session, s
 from werkzeug import secure_filename
 import os
 import sys
-from datetime import datetime,timedelta
+import time
 import json
 import random
 import traceback
+import base64
+import hashlib
 
 
 #Load script files
 from db_classes import db
 from db_query import insert_found, insert_missing, query_missing_by_name, query_found_by_name
 
-with open ("../config/config.json") as secret:
-	credentials = json.load(secret)
 
 
 
-
-server = Flask(__name__,template_folder='../templates')
+server = Flask(__name__,template_folder='../templates', static_folder='../static', static_url_path='/static')
 
 WTF_CSRF_ENABLED = True
 server.secret_key = os.urandom(999)
+
 
 
 #Environment/Debugging Mode Setting
@@ -32,20 +32,14 @@ server.secret_key = os.urandom(999)
 server.config["ENV"] = 'development'
 server.config["DEBUG"] = True
 
-SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
-	username=credentials['sqlalchemy']['username'],
-	password=credentials['sqlalchemy']['password'],
-	hostname=credentials['sqlalchemy']['hostname'],
-	databasename=credentials['sqlalchemy']['databasename'],
-)
-server.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+server.config["SQLALCHEMY_DATABASE_URI"] = None
 server.config["SQLALCHEMY_POOL_RECYCLE"] = 60
 server.config['SQLALCHEMY_POOL_TIMEOUT'] = 20
 server.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 server.config["PHOTO_UPLOAD_DIR"] = "../static/photos"
+server.config["STATIC_FOLDER"] = "../static/"
 
 db.init_app(server)
-
 
 
 #############################################################################################################
@@ -68,10 +62,38 @@ def index():
 		abort(400) #bad request
 
 
+@server.route("/photo", methods=["POST"])
+def photo():
+
+	hash = hashlib.sha1()
+	hash.update(str(time.time()).encode('utf-8'))
+
+	filename = "{}.jpg".format(hash.hexdigest()[:10])
+
+	img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], filename)
+	session['img_save_path'] = img_save_path
+
+	image_64 = request.values['imageBased64']
+	image_data = base64.b64decode(image_64)
+
+	with open(img_save_path, 'wb') as image:
+		image.write(image_data)
 
 
-@server.route("/checkin", methods=["GET","POST"])
-def checkin():
+	return redirect(url_for("checkin"))
+
+
+@server.route("/checkin1", methods=["GET","POST"])
+def checkin1():
+
+	if request.method == "GET":
+
+		return render_template("checkin1.html")
+
+
+
+@server.route("/checkin2", methods=["GET","POST"])
+def checkin2():
 
 	if request.method == "GET":
 
@@ -79,14 +101,8 @@ def checkin():
 
 	elif request.method == "POST":
 
-		#img = request.files['file']
-
-		#img_save_path = os.path.join(app.config['PHOTO_UPLOAD_DIR'], secure_filename(f.filename))
-
-		#img.save(img_save_path)
-
 		data = {
-			"img_path": "test_path", #img_save_path,
+			"img_path": session['img_save_path'],
 			"name": request.form["name"],
 			"nationality": request.form["nationality"],
 			"description": request.form["description"],
@@ -97,9 +113,9 @@ def checkin():
 		response = insert_found(data)
 
 		if response == True:
-			return render_template("checkin.html", msg="Recorded New Found Person. This person has not been reported as missing.")
+			return render_template("checkin2.html", msg="Recorded New Found Person. This person has not been reported as missing.")
 		else:
-			return render_template("checkin.html", msg="Recorded New Found Person. This person was reported missing by {}, contact no. {}, contact eamil {}.".format(response.contact_name, response.contact_phone, response.contact_email))
+			return render_template("checkin2.html", msg="Recorded New Found Person. This person was reported missing by {}, contact no. {}, contact eamil {}.".format(response.contact_name, response.contact_phone, response.contact_email))
 	else:
 		abort(400) #bad request
 
