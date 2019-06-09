@@ -116,9 +116,23 @@ def checkin2():
 		if response == True:
 			return render_template("checkin2.html", msg="Recorded New Found Person. This person has not been reported as missing.")
 		else:
-			return render_template("checkin2.html", msg="Recorded New Found Person. This person was reported missing by {}, contact no. {}, contact eamil {}.".format(response.contact_name, response.contact_phone, response.contact_email))
+			#A missing person of same name is on record, primary match key
+			session["db_person_missing"] = response
+			return redirect(url_for("checkin3"))
 	else:
 		abort(400) #bad request
+
+
+@server.route("/checkinmissing", methods=["GET"])
+def checkin3():
+
+	if request.method == "GET":
+
+		response = session["db_person_missing"]
+
+		#To-Do: Check Waston AI, as secondary match key
+
+		return render_template("checkin3.html", name = response.name, contact_name=response.contact_name, contact_phone=response.contact_phone, contact_email=response.contact_email)
 
 
 
