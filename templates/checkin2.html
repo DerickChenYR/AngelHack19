@@ -12,7 +12,7 @@
 
         {% if msg %}
         <h3> {{msg}} </h3>
-        <a href="/home" style="padding: 30px;"><button>Return Home</button></a>
+        <a href="/home" >Return Home</a>
         
         {% else %}
         <h3>Individual Information</h3>
@@ -44,6 +44,13 @@
 </html>
 
 <style>
+
+    body {
+  background-image: url("{{ url_for('static', filename='images/disaster-relief2.jpg') }}");
+  background-size: cover;
+  background-blend-mode: luminosity;
+}
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
 * {
   margin: 0;
@@ -58,14 +65,7 @@
   text-rendering: optimizeLegibility;
 }
 
-body {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
-  font-weight: 100;
-  font-size: 12px;
-  line-height: 30px;
-  color: #777;
-  background: #1D9EED;
-}
+
 
 .container {
   max-width: 400px;
