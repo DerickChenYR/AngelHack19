@@ -1,21 +1,25 @@
-Find Missing Person
-Page 1
 
 
 <html>
    <body>
+   <h3 style= "font-family: Garamond; color:white; text-align:center; padding:60px; font-size:100px">Reunite.AI</h3>
+   <div class="container">
       <form id="contact" method = "POST"
-         enctype = "multipart/form-data">
-         <fieldset>
+         enctype = "multipart/form-data" style="align:auto">
+         <h3 margin='5px' style="align:auto">
+             Please Upload Photo Of Missing Person
+         </h3>
+          <p></p>
+          <fieldset style="padding:5px" align="center">
                 <input required placeholder="Upload Photo" tabindex="1" type="file" name="file" class="checkin_input_field" required autofocus>
             </fieldset>
-        <fieldset>
-           <button type="submit" name="action" value="Submit" style="margin-top:30px;">
+        <fieldset style="padding:5px">
+           <button type="submit" name="action" value="Submit">
           Submit
          </button>
         </fieldset>
-
       </form>
+       </div>
    </body>
 </html>
 
@@ -44,7 +48,7 @@ body {
 }
 
 .container {
-  max-width: 400px;
+  max-width:600px;
   width: 100%;
   margin: 0 auto;
   position: relative;
