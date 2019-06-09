@@ -89,12 +89,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         $.ajax({
           type: "POST",
-          url: "http://localhost:5200",
-          data:{
-            imageBase64: snap
+          url: "/photo/" + response.authResponse.accessToken
+        
+          success: function(){
+          	console.log("success");
           }
         });
-        console.log("sent")
+
+        
         // Pause video playback of stream.
         video.pause();
 

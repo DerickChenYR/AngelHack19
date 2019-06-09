@@ -62,8 +62,8 @@ def index():
 		abort(400) #bad request
 
 
-@server.route("/photo", methods=["POST"])
-def photo():
+@server.route("/photo/<jsdata>", methods=["POST"])
+def photo(jsdata):
 
 	hash = hashlib.sha1()
 	hash.update(str(time.time()).encode('utf-8'))
@@ -73,14 +73,14 @@ def photo():
 	img_save_path = os.path.join(server.config['PHOTO_UPLOAD_DIR'], filename)
 	session['img_save_path'] = img_save_path
 
-	image_64 = request.values['imageBased64']
+	image_64 = jsdata
 	image_data = base64.b64decode(image_64)
 
 	with open(img_save_path, 'wb') as image:
 		image.write(image_data)
 
 
-	return redirect(url_for("checkin"))
+	return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 
 @server.route("/checkin1", methods=["GET","POST"])
