@@ -76,6 +76,9 @@ document.addEventListener('DOMContentLoaded', function () {
         image.setAttribute('src', snap);
         image.classList.add("visible");
 
+        photo_link = document.getElementById("photo_sub")
+        photo_link.setAttribute('name',snap)
+
         // Enable delete and save buttons
         delete_photo_btn.classList.remove("disabled");
         download_photo_btn.classList.remove("disabled");
@@ -83,6 +86,15 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set the href attribute of the download button to the snap url.
         download_photo_btn.href = snap;
 
+
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:5200",
+          data:{
+            imageBase64: snap
+          }
+        });
+        console.log("sent")
         // Pause video playback of stream.
         video.pause();
 
@@ -136,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
             context.drawImage(video, 0, 0, width, height);
 
             // Turn the canvas image into a dataURL that can be used as a src for our photo.
-            return hidden_canvas.toDataURL('image/png');
+            return hidden_canvas.toDataURL();
         }
     }
 
