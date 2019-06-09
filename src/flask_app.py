@@ -16,7 +16,7 @@ import hashlib
 #Load script files
 from db_classes import db
 from db_query import insert_found, insert_missing, query_missing_by_name, query_found_by_name
-
+from watson_api import watson_test
 
 
 
@@ -131,10 +131,13 @@ def checkin3():
 		response = query_missing_by_name(session["missing_name"])
 
 		#To-Do: Check Waston AI, as secondary match key
+		matched = watson_test(response.img_path)
 
-		return render_template("checkin3.html", name = response.name, contact_name=response.contact_name, contact_phone=response.contact_phone, contact_email=response.contact_email)
-
-
+		if matched:
+			return render_template("checkin3.html", facial_ai = "Matched", name = response.name, contact_name=response.contact_name, contact_phone=response.contact_phone, contact_email=response.contact_email)
+		else:
+			return render_template("checkin3.html", facial_ai = "NOT Matched", name = response.name, contact_name=response.contact_name, contact_phone=response.contact_phone, contact_email=response.contact_email)
+		
 
 
 @server.route("/findmissing1", methods=["GET","POST"])
