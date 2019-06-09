@@ -23,7 +23,7 @@ def watson_test(img_path):
 		classes = visual_recognition.classify(
 		images_file,
 		threshold="{}".format(threshold),
-		classifier_ids="DefaultCustomModel_549148796"
+		classifier_ids=credentials['watson_API']['Test_Model']
 		).get_result()
 		pprint(classes)
 		#get AI facial class model 2 scores

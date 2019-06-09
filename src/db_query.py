@@ -17,9 +17,15 @@ def insert_missing(data, db_session = db_session):
 						contact_phone = data['contact_phone'],
 						)
 
+	person_filed_found = query_found_by_name(data['name'])
+
 	#push to db
 	db_session.add(new_missing)
 	db_session.commit()
+
+	#if this person has been filed as a missing person, return data to contact family
+	if person_filed_found:
+		return person_filed_found
 
 	#success
 	return True
